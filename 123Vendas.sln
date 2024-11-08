@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vendas", "Vendas", "{EA776A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "123Vendas.Vendas.API", "src\services\123Vendas.Vendas.API\123Vendas.Vendas.API.csproj", "{330EE705-A0F2-43AA-93B9-85FCFF0FB6F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "123Vendas.Vendas.Domain", "src\services\123Vendas.Vendas.Domain\123Vendas.Vendas.Domain.csproj", "{D26734C1-9F49-4A6C-BDDE-21213C44BEBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{330EE705-A0F2-43AA-93B9-85FCFF0FB6F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{330EE705-A0F2-43AA-93B9-85FCFF0FB6F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{330EE705-A0F2-43AA-93B9-85FCFF0FB6F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D26734C1-9F49-4A6C-BDDE-21213C44BEBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D26734C1-9F49-4A6C-BDDE-21213C44BEBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D26734C1-9F49-4A6C-BDDE-21213C44BEBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D26734C1-9F49-4A6C-BDDE-21213C44BEBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -29,6 +35,7 @@ Global
 		{F5C90E4F-F61B-45D1-91A2-B8D271FB1FD9} = {F94BC30A-1000-4F3F-A527-CC2D51472846}
 		{EA776AC4-FE3B-4E6F-B8A2-F9AC8DE8A65A} = {F5C90E4F-F61B-45D1-91A2-B8D271FB1FD9}
 		{330EE705-A0F2-43AA-93B9-85FCFF0FB6F0} = {EA776AC4-FE3B-4E6F-B8A2-F9AC8DE8A65A}
+		{D26734C1-9F49-4A6C-BDDE-21213C44BEBC} = {EA776AC4-FE3B-4E6F-B8A2-F9AC8DE8A65A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0C35A03D-9539-4D8E-B79C-549D10BA4F5B}
