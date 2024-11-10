@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace _123Vendas.Vendas.Infra.Data.Mappings;
 
-public class ProdutoItemMapping : IEntityTypeConfiguration<ProdutoItem>
+public class VendaItemMapping : IEntityTypeConfiguration<VendaItem>
 {
-    public void Configure(EntityTypeBuilder<ProdutoItem> builder)
+    public void Configure(EntityTypeBuilder<VendaItem> builder)
     {
         builder.HasKey(c => c.Id);
 
@@ -15,8 +15,8 @@ public class ProdutoItemMapping : IEntityTypeConfiguration<ProdutoItem>
 
         // 1 : N => Venda : Itens
         builder.HasOne(c => c.Venda)
-            .WithMany(c => c.ProdutoItens);
+            .WithMany(c => c.VendaItens);
 
-        builder.ToTable("ProdutoItens");
+        builder.ToTable("VendaItens");
     }
 }

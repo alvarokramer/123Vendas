@@ -12,13 +12,11 @@ public class VendasContext : DbContext, IUnitOfWork
     }
 
     public DbSet<Venda> Vendas { get; set; }
-    public DbSet<ProdutoItem> ProdutoItens { get; set; }
+    public DbSet<VendaItem> ProdutoItens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VendasContext).Assembly);
-
-        modelBuilder.HasSequence<int>("SequenciaNroVenda").StartsAt(1000).IncrementsBy(1);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VendasContext).Assembly);        
 
         base.OnModelCreating(modelBuilder);
     }    

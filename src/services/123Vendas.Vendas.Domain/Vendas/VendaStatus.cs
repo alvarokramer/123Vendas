@@ -4,7 +4,6 @@ public enum VendaStatus
 {
     Autorizado = 1,
     Pago = 2,
-    Recusado = 3,
-    Entregue = 4,
-    Cancelado = 5
+    Recusado = 3,    
+    Cancelado = 4
 }

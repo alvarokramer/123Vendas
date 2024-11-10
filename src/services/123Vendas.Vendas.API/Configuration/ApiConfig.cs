@@ -1,6 +1,10 @@
-﻿using _123Vendas.Vendas.Infra.Data;
+﻿using _123Vendas.Vendas.API.Application.Commands;
+using _123Vendas.Vendas.API.Application.Queries;
+using _123Vendas.Vendas.Domain.Vendas;
+using _123Vendas.Vendas.Infra.Data;
+using _123Vendas.Vendas.Infra.Data.Repository;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace _123Vendas.Vendas.API.Configuration;
 
@@ -10,5 +14,12 @@ public static class ApiConfig
     {
         services.AddDbContext<VendasContext>(options =>
              options.UseSqlite(configuration.GetConnectionString("VendasDb")));
+
+        // Commands
+        services.AddScoped<IRequestHandler<CriarCompraCommand>, CriarCompraCommandHandler>();
+
+        // Data
+        services.AddScoped<IVendaRepository, VendaRepository>();
+        services.AddScoped<IVendaQueries, VendaQueries>();        
     }
 }

@@ -14,25 +14,25 @@ public class VendaRepository : IVendaRepository
 
     public IUnitOfWork UnitOfWork => _context;
 
-    public async Task<Venda> GetAsync(int vendaId)
+    public async Task<Venda> ObterPorIdAsync(Guid vendaId)
     {
         var venda = await _context.Vendas.FindAsync(vendaId);
 
         if (venda is not null)
         {
             await _context.Entry(venda)
-                .Collection(i => i.ProdutoItens).LoadAsync();
+                .Collection(i => i.VendaItens).LoadAsync();
         }
 
         return venda;            
     }
 
-    public void Add(Venda venda)
+    public void Adicionar(Venda venda)
     {
         _context.Vendas.Add(venda);
     }        
 
-    public void Update(Venda venda)
+    public void Atualizar(Venda venda)
     {
         _context.Vendas.Update(venda);
     }

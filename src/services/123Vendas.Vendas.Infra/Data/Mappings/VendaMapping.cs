@@ -13,13 +13,10 @@ public class VendaMapping : IEntityTypeConfiguration<Venda>
 {
     public void Configure(EntityTypeBuilder<Venda> builder)
     {
-        builder.HasKey(c => c.Id);
-
-        builder.Property(c => c.NroVenda)
-                .HasDefaultValueSql("NEXT VALUE FOR SequenciaNroVenda");
+        builder.HasKey(c => c.Id);        
 
         // 1 : N => Venda : ProdutoItens
-        builder.HasMany(c => c.ProdutoItens)
+        builder.HasMany(c => c.VendaItens)
                 .WithOne(c => c.Venda)
                 .HasForeignKey(c => c.VendaId);
 

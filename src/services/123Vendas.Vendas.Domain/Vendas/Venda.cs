@@ -4,21 +4,22 @@ namespace _123Vendas.Vendas.Domain.Vendas;
 
 public class Venda : Entity, IAggregateRoot
 {
-    public Venda(Guid clienteId, decimal valorTotal, List<ProdutoItem> vendaItens, string filial,
+    public Venda(Guid clienteId, decimal valorTotal, List<VendaItem> vendaItens, string filial,
         decimal desconto = 0)
     {
         ClienteId = clienteId;
         ValorTotal = valorTotal;
         _vendaItens = vendaItens;
-
         Desconto = desconto;
         Filial = filial;
+        NumeroVenda = new Random().Next(1, 9999);
+        DataVenda = DateTime.Today;
     }
 
     // EF constructor
     protected Venda() { }
-
-    public int NroVenda { get; private set; }
+    
+    public int NumeroVenda { get; private set; }
     public DateTime DataVenda { get; private set; }
     public Guid ClienteId { get; private set; }
     public decimal Desconto { get; private set; }
@@ -26,8 +27,8 @@ public class Venda : Entity, IAggregateRoot
     public string Filial { get; private set; }
     public VendaStatus VendaStatus { get; private set; }
 
-    private readonly List<ProdutoItem> _vendaItens;
-    public IReadOnlyCollection<ProdutoItem> ProdutoItens => _vendaItens;
+    private readonly List<VendaItem> _vendaItens;
+    public IReadOnlyCollection<VendaItem> VendaItens => _vendaItens;
 
     public void AutorizarVenda()
     {
@@ -36,7 +37,7 @@ public class Venda : Entity, IAggregateRoot
 
     public void CalcularValorVenda()
     {
-        ValorTotal = ProdutoItens.Sum(p => p.CalcularValor());
+        ValorTotal = VendaItens.Sum(item => item.CalcularValor());
         CalcularValorTotalDesconto();
     }
 

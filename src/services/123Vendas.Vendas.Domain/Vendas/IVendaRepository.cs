@@ -4,7 +4,7 @@ namespace _123Vendas.Vendas.Domain.Vendas;
 
 public interface IVendaRepository : IRepository<Venda>
 {
-    void Add(Venda venda);
-    void Update(Venda venda);
-    Task<Venda> GetAsync(int vendaId);
+    void Adicionar(Venda venda);
+    void Atualizar(Venda venda);
+    Task<Venda> ObterPorIdAsync(Guid vendaId);
 }
