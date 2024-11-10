@@ -1,5 +1,4 @@
 using _123Vendas.Vendas.API.Configuration;
-using Microsoft.AspNetCore.Hosting;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
