@@ -1,5 +1,6 @@
 ﻿using _123Vendas.Vendas.Domain.DomainObj;
 using _123Vendas.Vendas.Domain.Vendas;
+using Microsoft.EntityFrameworkCore;
 
 namespace _123Vendas.Vendas.Infra.Data.Repository;
 
@@ -14,7 +15,7 @@ public class VendaRepository : IVendaRepository
 
     public IUnitOfWork UnitOfWork => _context;
 
-    public async Task<Venda> ObterPorIdAsync(Guid vendaId)
+    public async Task<Venda> ObterVendaPorId(Guid vendaId)
     {
         var venda = await _context.Vendas.FindAsync(vendaId);
 
@@ -25,7 +26,7 @@ public class VendaRepository : IVendaRepository
         }
 
         return venda;            
-    }
+    }    
 
     public void Adicionar(Venda venda)
     {
@@ -35,6 +36,16 @@ public class VendaRepository : IVendaRepository
     public void Atualizar(Venda venda)
     {
         _context.Vendas.Update(venda);
+    }
+
+    public async Task<VendaItem> ObterItemPorVenda(Guid vendaId, Guid produtoId)
+    {
+        return await _context.VendaItens.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.VendaId == vendaId);
+    }
+
+    public void RemoverItem(VendaItem vendaItem)
+    {
+        _context.VendaItens.Remove(vendaItem);
     }
 
     public void Dispose()

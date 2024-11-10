@@ -19,7 +19,7 @@ public class VendaQueries : IVendaQueries
 
     public async Task<VendaDTO> ObterVenda(Guid vendaId)
     {
-        var venda = await _vendaRepository.ObterPorIdAsync(vendaId);
+        var venda = await _vendaRepository.ObterVendaPorId(vendaId);
 
         return VendaDTO.ParaVendaDTO(venda);
     }

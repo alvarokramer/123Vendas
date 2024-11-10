@@ -16,6 +16,15 @@ public class VendaController : Controller
         _vendaQueries = vendaQueries;
     }
 
+    [HttpGet]
+    [Route("compra/{compraId:guid}")]
+    public async Task<IActionResult> ObterCompra([FromRoute] Guid compraId)
+    {
+        var venda = await _vendaQueries.ObterVenda(compraId);
+
+        return venda is null ? NotFound() : Ok(venda);
+    }
+
     [HttpPost]
     [Route("compra")]
     public async Task<IActionResult> CriarCompra([FromBody] CriarCompraCommand compraCommand)
@@ -25,12 +34,23 @@ public class VendaController : Controller
         return Ok();
     }
 
-    [HttpGet]
-    [Route("compra/{compraId:guid}")]
-    public async Task<IActionResult> ObterCompra([FromRoute] Guid compraId)
+    [HttpPost]
+    [Route("compra/removerItem")]
+    public async Task<IActionResult> RemoverItem(Guid compraId, Guid itemId)
     {
-        var venda = await _vendaQueries.ObterVenda(compraId);
+        var command = new RemoverItemCommand(compraId, itemId);
+        await _mediator.Send(command);
 
-        return venda is null ? NotFound() : Ok(venda);
+        return Ok();
+    }
+
+    [HttpPost]
+    [Route("compra/cancelar")]
+    public async Task<IActionResult> CancelarCompra(Guid compraId)
+    {
+        var command = new CancelarCompraCommand(compraId);
+        await _mediator.Send(command);
+
+        return Ok();
     }
 }

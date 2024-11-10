@@ -15,7 +15,7 @@ public static class ApiConfig
         services.AddDbContext<VendasContext>(options =>
              options.UseSqlite(configuration.GetConnectionString("VendasDb")));
         
-        services.AddScoped<IRequestHandler<CriarCompraCommand>, CriarCompraCommandHandler>();
+        services.AddScoped<IRequestHandler<CriarCompraCommand>, CompraCommandHandler>();
         services.AddScoped<IVendaQueries, VendaQueries>();
 
         // Data

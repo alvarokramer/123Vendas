@@ -12,7 +12,7 @@ public class VendasContext : DbContext, IUnitOfWork
     }
 
     public DbSet<Venda> Vendas { get; set; }
-    public DbSet<VendaItem> ProdutoItens { get; set; }
+    public DbSet<VendaItem> VendaItens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

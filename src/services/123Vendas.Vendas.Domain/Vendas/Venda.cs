@@ -30,9 +30,29 @@ public class Venda : Entity, IAggregateRoot
     private readonly List<VendaItem> _vendaItens;
     public IReadOnlyCollection<VendaItem> VendaItens => _vendaItens;
 
+    public bool VendaItemExistente(VendaItem item)
+    {
+        return VendaItens.Any(p => p.ProdutoId == item.ProdutoId);
+    }
+
+    public void RemoverItem(VendaItem item)
+    {
+        var itemExistente = VendaItens.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);
+
+        if (itemExistente is null) throw new InvalidDataException("O item não pertence a venda");
+
+        _vendaItens.Remove(itemExistente);
+        CalcularValorVenda();
+    }
+
     public void AutorizarVenda()
     {
         VendaStatus = VendaStatus.Autorizado;
+    }
+
+    public void CancelarVenda()
+    {
+        VendaStatus = VendaStatus.Cancelado;
     }
 
     public void CalcularValorVenda()
@@ -41,7 +61,7 @@ public class Venda : Entity, IAggregateRoot
         CalcularValorTotalDesconto();
     }
 
-    public void CalcularValorTotalDesconto()
+    private void CalcularValorTotalDesconto()
     {
         decimal desconto = Desconto < 0 ? 0 : Desconto;
         var valor = ValorTotal;
