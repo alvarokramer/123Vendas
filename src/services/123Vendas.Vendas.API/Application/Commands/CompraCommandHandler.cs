@@ -36,10 +36,10 @@ public class CompraCommandHandler :
         if (venda is null)
             throw new InvalidDataException("Compra não encontrada!");
 
-        var pedidoItemExistente = venda.VendaItemExistente(vendaItem);
+        var vendaItemExistente = venda.VendaItemExistente(vendaItem);
         venda.AdicionarItem(vendaItem);
 
-        if (pedidoItemExistente)
+        if (vendaItemExistente)
         {
             _vendaRepository.AtualizarItem(
                 venda.VendaItens.FirstOrDefault(p => p.ProdutoId == vendaItem.ProdutoId));
