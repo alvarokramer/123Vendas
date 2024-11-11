@@ -35,6 +35,23 @@ public class Venda : Entity, IAggregateRoot
         return VendaItens.Any(p => p.ProdutoId == item.ProdutoId);
     }
 
+    public void AdicionarItem(VendaItem item)
+    {
+        item.AssociarVenda(Id);
+
+        if (VendaItemExistente(item))
+        {
+            var itemExistente = _vendaItens.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);
+            itemExistente.AdicionarUnidades(item.Quantidade);
+            item = itemExistente;
+
+            _vendaItens.Remove(itemExistente);
+        }
+
+        _vendaItens.Add(item);
+        CalcularValorVenda();
+    }
+
     public void RemoverItem(VendaItem item)
     {
         var itemExistente = VendaItens.FirstOrDefault(p => p.ProdutoId == item.ProdutoId);

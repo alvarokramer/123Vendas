@@ -35,6 +35,15 @@ public class VendaController : Controller
     }
 
     [HttpPost]
+    [Route("compra/adicionarItem")]
+    public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemCommand compraCommand)
+    {
+        await _mediator.Send(compraCommand);
+
+        return Ok();
+    }
+
+    [HttpPost]
     [Route("compra/removerItem")]
     public async Task<IActionResult> RemoverItem(Guid compraId, Guid itemId)
     {

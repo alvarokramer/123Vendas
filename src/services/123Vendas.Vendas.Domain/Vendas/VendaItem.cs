@@ -26,6 +26,16 @@ public class VendaItem : Entity
     // EF constructor
     protected VendaItem() { }
 
+    internal void AssociarVenda(Guid vendaId)
+    {
+        VendaId = vendaId;
+    }
+
+    internal void AdicionarUnidades(int unidades)
+    {
+        Quantidade += unidades;
+    }
+
     internal decimal CalcularValor()
     {
         ValorTotal = Quantidade * ValorUnitario;

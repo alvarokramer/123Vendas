@@ -40,7 +40,7 @@ public class VendaDTO
                 Nome = item.ProdutoNome,                
                 Quantidade = item.Quantidade,
                 ProdutoId = item.ProdutoId,
-                Valor = item.ValorUnitario,
+                ValorUnitario = item.ValorUnitario,
                 ValorTotal = item.ValorTotal                                
             });
         }       

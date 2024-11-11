@@ -8,5 +8,7 @@ public interface IVendaRepository : IRepository<Venda>
     void Atualizar(Venda venda);
     Task<Venda> ObterVendaPorId(Guid vendaId);
     Task<VendaItem> ObterItemPorVenda(Guid vendaId, Guid produtoId);
+    void AdicionarItem(VendaItem vendaItem);
+    void AtualizarItem(VendaItem vendaItem);
     void RemoverItem(VendaItem vendaItem);
 }
