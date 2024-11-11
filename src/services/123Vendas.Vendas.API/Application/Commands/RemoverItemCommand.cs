@@ -4,12 +4,12 @@ namespace _123Vendas.Vendas.API.Application.Commands;
 
 public class RemoverItemCommand : IRequest
 {
-    public Guid VendaId { get; private set; }
+    public Guid CompraId { get; private set; }
     public Guid ProdutoId { get; private set; }
 
-    public RemoverItemCommand(Guid vendaId, Guid produtoId)
+    public RemoverItemCommand(Guid compraId, Guid produtoId)
     {
-        VendaId = vendaId;
+        CompraId = compraId;
         ProdutoId = produtoId;
     }
 }

@@ -4,10 +4,10 @@ namespace _123Vendas.Vendas.API.Application.Commands;
 
 public class CancelarCompraCommand : IRequest
 {
-    public Guid VendaId { get; private set; }
+    public Guid CompraId { get; private set; }
 
-    public CancelarCompraCommand(Guid vendaId) 
+    public CancelarCompraCommand(Guid compraId) 
     {
-        VendaId = vendaId;
+        CompraId = compraId;
     }
 }

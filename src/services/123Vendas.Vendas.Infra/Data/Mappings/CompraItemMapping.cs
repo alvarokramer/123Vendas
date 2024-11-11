@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace _123Vendas.Vendas.Infra.Data.Mappings;
 
-public class VendaItemMapping : IEntityTypeConfiguration<VendaItem>
+public class CompraItemMapping : IEntityTypeConfiguration<CompraItem>
 {
-    public void Configure(EntityTypeBuilder<VendaItem> builder)
+    public void Configure(EntityTypeBuilder<CompraItem> builder)
     {
         builder.HasKey(c => c.Id);
 
         builder.Property(c => c.ProdutoNome)
             .IsRequired();            
 
-        // 1 : N => Venda : Itens
-        builder.HasOne(c => c.Venda)
-            .WithMany(c => c.VendaItens);
+        // 1 : N => Compra : Itens
+        builder.HasOne(c => c.Compra)
+            .WithMany(c => c.CompraItens);
 
-        builder.ToTable("VendaItens");
+        builder.ToTable("CompraItens");
     }
 }

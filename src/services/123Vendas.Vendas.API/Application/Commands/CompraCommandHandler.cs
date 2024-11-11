@@ -10,79 +10,79 @@ public class CompraCommandHandler :
     IRequestHandler<RemoverItemCommand>,
     IRequestHandler<CancelarCompraCommand>
 {
-    private readonly IVendaRepository _vendaRepository;
+    private readonly ICompraRepository _compraRepository;
 
-    public CompraCommandHandler(IVendaRepository vendaRepository)
+    public CompraCommandHandler(ICompraRepository compraRepository)
     {
-        _vendaRepository = vendaRepository;
+        _compraRepository = compraRepository;
     }
 
     public async Task Handle(CriarCompraCommand request, CancellationToken cancellationToken)
     {
-        var venda = MapearCompra(request);
-        venda.CalcularValorVenda();
-        venda.AutorizarVenda();
+        var compra = MapearCompra(request);
+        compra.CalcularValorCompra();
+        compra.AutorizarCompra();
 
-        _vendaRepository.Adicionar(venda);
+        _compraRepository.Adicionar(compra);
 
-        await _vendaRepository.UnitOfWork.Commit();
+        await _compraRepository.UnitOfWork.Commit();
     }
 
     public async Task Handle(AdicionarItemCommand request, CancellationToken cancellationToken)
     {
-        var venda = await _vendaRepository.ObterVendaPorId(request.VendaId);
-        var vendaItem = new VendaItem(request.ProdutoId, request.Nome, request.Quantidade, request.ValorUnitario);
+        var compra = await _compraRepository.ObterCompraPorId(request.CompraId);
+        var compraItem = new CompraItem(request.ProdutoId, request.Nome, request.Quantidade, request.ValorUnitario);
 
-        if (venda is null)
+        if (compra is null)
             throw new InvalidDataException("Compra não encontrada!");
 
-        var vendaItemExistente = venda.VendaItemExistente(vendaItem);
-        venda.AdicionarItem(vendaItem);
+        var compraItemExistente = compra.CompraItemExistente(compraItem);
+        compra.AdicionarItem(compraItem);
 
-        if (vendaItemExistente)
+        if (compraItemExistente)
         {
-            _vendaRepository.AtualizarItem(
-                venda.VendaItens.FirstOrDefault(p => p.ProdutoId == vendaItem.ProdutoId));
+            _compraRepository.AtualizarItem(
+                compra.CompraItens.FirstOrDefault(p => p.ProdutoId == compraItem.ProdutoId));
         }
         else
         {
-            _vendaRepository.AdicionarItem(vendaItem);
+            _compraRepository.AdicionarItem(compraItem);
         }
 
-        await _vendaRepository.UnitOfWork.Commit();
+        await _compraRepository.UnitOfWork.Commit();
     }
 
     public async Task Handle(RemoverItemCommand request, CancellationToken cancellationToken)
     {
-        var venda = await _vendaRepository.ObterVendaPorId(request.VendaId);
+        var compra = await _compraRepository.ObterCompraPorId(request.CompraId);
 
-        if (venda is null)
+        if (compra is null)
             throw new InvalidDataException("Compra não encontrada!");
 
-        var vendaItem = await _vendaRepository.ObterItemPorVenda(venda.Id, request.ProdutoId);
-        venda.RemoverItem(vendaItem);
+        var compraItem = await _compraRepository.ObterItemPorCompra(compra.Id, request.ProdutoId);
+        compra.RemoverItem(compraItem);
 
-        _vendaRepository.RemoverItem(vendaItem);
-        _vendaRepository.Atualizar(venda);
+        _compraRepository.RemoverItem(compraItem);
+        _compraRepository.Atualizar(compra);
 
-        await _vendaRepository.UnitOfWork.Commit();
+        await _compraRepository.UnitOfWork.Commit();
     }
 
     public async Task Handle(CancelarCompraCommand request, CancellationToken cancellationToken)
     {
-        var venda = await _vendaRepository.ObterVendaPorId(request.VendaId);
-        venda.CancelarVenda();
+        var compra = await _compraRepository.ObterCompraPorId(request.CompraId);
+        compra.CancelarCompra();
 
-        _vendaRepository.Atualizar(venda);
-        await _vendaRepository.UnitOfWork.Commit();
+        _compraRepository.Atualizar(compra);
+        await _compraRepository.UnitOfWork.Commit();
     }
 
-    private Venda MapearCompra(CriarCompraCommand message)
+    private Compra MapearCompra(CriarCompraCommand message)
     {
-        var venda = new Venda(message.ClienteId, message.ValorTotal,
-            message.VendaItens.Select(VendaItemDTO.MapearVendaItem).ToList(),
+        var compra = new Compra(message.ClienteId, message.ValorTotal,
+            message.CompraItens.Select(CompraItemDTO.MapearCompraItem).ToList(),
             message.Filial, message.Desconto);
 
-        return venda;
+        return compra;
     }
 }

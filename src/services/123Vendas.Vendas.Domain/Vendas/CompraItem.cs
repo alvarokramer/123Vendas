@@ -2,9 +2,9 @@
 
 namespace _123Vendas.Vendas.Domain.Vendas;
 
-public class VendaItem : Entity
+public class CompraItem : Entity
 {
-    public Guid VendaId { get; private set; }
+    public Guid CompraId { get; private set; }
     public Guid ProdutoId { get; private set; }
     public string ProdutoNome { get; private set; }
     public int Quantidade { get; private set; }
@@ -12,9 +12,9 @@ public class VendaItem : Entity
     public decimal ValorTotal { get; private set; }
 
     // EF Relation
-    public Venda Venda { get; set; }
+    public Compra Compra { get; set; }
 
-    public VendaItem(Guid produtoId, string produtoNome, int quantidade,
+    public CompraItem(Guid produtoId, string produtoNome, int quantidade,
             decimal valorUnitario)
     {
         ProdutoId = produtoId;
@@ -24,11 +24,11 @@ public class VendaItem : Entity
     }
 
     // EF constructor
-    protected VendaItem() { }
+    protected CompraItem() { }
 
-    internal void AssociarVenda(Guid vendaId)
+    internal void AssociarCompra(Guid compraId)
     {
-        VendaId = vendaId;
+        CompraId = compraId;
     }
 
     internal void AdicionarUnidades(int unidades)

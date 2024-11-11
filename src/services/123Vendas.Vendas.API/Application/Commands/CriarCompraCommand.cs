@@ -9,5 +9,5 @@ public class CriarCompraCommand : IRequest
     public decimal ValorTotal { get; set; }
     public decimal Desconto { get; set; }
     public string Filial { get; set; }
-    public List<VendaItemDTO> VendaItens { get; set; }
+    public List<CompraItemDTO> CompraItens { get; set; }
 }

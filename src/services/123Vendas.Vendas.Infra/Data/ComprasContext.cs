@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace _123Vendas.Vendas.Infra.Data;
 
-public class VendasContext : DbContext, IUnitOfWork
+public class ComprasContext : DbContext, IUnitOfWork
 {
-    public VendasContext(DbContextOptions<VendasContext> options)
+    public ComprasContext(DbContextOptions<ComprasContext> options)
         : base(options)
     {        
     }
 
-    public DbSet<Venda> Vendas { get; set; }
-    public DbSet<VendaItem> VendaItens { get; set; }
+    public DbSet<Compra> Compras { get; set; }
+    public DbSet<CompraItem> CompraItens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(VendasContext).Assembly);        
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ComprasContext).Assembly);        
 
         base.OnModelCreating(modelBuilder);
     }    

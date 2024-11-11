@@ -3,40 +3,40 @@ using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace _123Vendas.Vendas.API.Application.DTO;
 
-public class VendaDTO
+public class CompraDTO
 {
     public Guid Id { get; set; }
     public Guid ClienteId { get; set; }
-    public int NumeroVenda { get; set; }
-    public DateTime DataVenda { get; set; }
+    public int NumeroCompra { get; set; }
+    public DateTime DataCompra { get; set; }
 
     public decimal ValorTotal { get; set; }
     public decimal Desconto { get; set; }
     public string Filial { get; set; }
     public string Status { get; set; }
 
-    public List<VendaItemDTO> VendaItens { get; set; }
+    public List<CompraItemDTO> CompraItens { get; set; }
 
-    public static VendaDTO ParaVendaDTO(Venda venda)
+    public static CompraDTO MapearParaCompraDTO(Compra compra)
     {
-        var vendaDTO = new VendaDTO
+        var compraDTO = new CompraDTO
         {
-            Id = venda.Id,
-            ClienteId = venda.ClienteId,
-            NumeroVenda = venda.NumeroVenda,
-            Status = ObterStatus((int)venda.VendaStatus),
-            DataVenda = venda.DataVenda,
-            ValorTotal = venda.ValorTotal,
-            Desconto = venda.Desconto,
-            Filial = venda.Filial,
-            VendaItens = new List<VendaItemDTO>()          
+            Id = compra.Id,
+            ClienteId = compra.ClienteId,
+            NumeroCompra = compra.NumeroCompra,
+            Status = ObterStatus((int)compra.CompraStatus),
+            DataCompra = compra.DataCompra,
+            ValorTotal = compra.ValorTotal,
+            Desconto = compra.Desconto,
+            Filial = compra.Filial,
+            CompraItens = new List<CompraItemDTO>()          
         };
 
-        foreach (var item in venda.VendaItens)
+        foreach (var item in compra.CompraItens)
         {
-            vendaDTO.VendaItens.Add(new VendaItemDTO
+            compraDTO.CompraItens.Add(new CompraItemDTO
             {
-                VendaId = item.VendaId,
+                CompraId = item.CompraId,
                 Nome = item.ProdutoNome,                
                 Quantidade = item.Quantidade,
                 ProdutoId = item.ProdutoId,
@@ -45,7 +45,7 @@ public class VendaDTO
             });
         }       
 
-        return vendaDTO;
+        return compraDTO;
     }
 
     public static string ObterStatus(int status) =>

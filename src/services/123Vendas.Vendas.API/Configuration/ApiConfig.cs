@@ -12,13 +12,13 @@ public static class ApiConfig
 {
     public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration) 
     {
-        services.AddDbContext<VendasContext>(options =>
+        services.AddDbContext<ComprasContext>(options =>
              options.UseSqlite(configuration.GetConnectionString("VendasDb")));
         
         services.AddScoped<IRequestHandler<CriarCompraCommand>, CompraCommandHandler>();
-        services.AddScoped<IVendaQueries, VendaQueries>();
+        services.AddScoped<ICompraQueries, CompraQueries>();
 
         // Data
-        services.AddScoped<IVendaRepository, VendaRepository>();        
+        services.AddScoped<ICompraRepository, CompraRepository>();        
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace _123Vendas.Vendas.Domain.Vendas;
 
-public enum VendaStatus
+public enum CompraStatus
 {
     Autorizado = 1,
     Pago = 2,

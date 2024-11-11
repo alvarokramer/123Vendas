@@ -5,24 +5,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace _123Vendas.Vendas.API.Controllers;
 
-public class VendaController : Controller
+public class CompraController : Controller
 {
     private readonly IMediator _mediator;
-    private readonly IVendaQueries _vendaQueries;
+    private readonly ICompraQueries _compraQueries;
 
-    public VendaController(IMediator mediator, IVendaQueries vendaQueries)
+    public CompraController(IMediator mediator, ICompraQueries compraQueries)
     {
         _mediator = mediator;
-        _vendaQueries = vendaQueries;
+        _compraQueries = compraQueries;
     }
 
     [HttpGet]
     [Route("compra/{compraId:guid}")]
     public async Task<IActionResult> ObterCompra([FromRoute] Guid compraId)
     {
-        var venda = await _vendaQueries.ObterVenda(compraId);
+        var compra = await _compraQueries.ObterCompra(compraId);
 
-        return venda is null ? NotFound() : Ok(venda);
+        return compra is null ? NotFound() : Ok(compra);
     }
 
     [HttpPost]

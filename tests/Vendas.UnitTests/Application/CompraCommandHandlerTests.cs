@@ -12,11 +12,11 @@ namespace Vendas.UnitTests.Application;
 
 public class CompraCommandHandlerTests
 {
-    private readonly IVendaRepository _vendaRepositoryMock;
+    private readonly ICompraRepository _compraRepositoryMock;
 
     public CompraCommandHandlerTests()
     {
-        _vendaRepositoryMock = Substitute.For<IVendaRepository>();        
+        _compraRepositoryMock = Substitute.For<ICompraRepository>();        
     }
 
     [Fact(DisplayName = "Criar Nova Compra Command")]
@@ -26,17 +26,17 @@ public class CompraCommandHandlerTests
         // Assert
         var fakeCriarCompra = CriarCompraCommandMock(2);
 
-        _vendaRepositoryMock.Adicionar(Arg.Any<Venda>());
-        _vendaRepositoryMock.UnitOfWork.Commit().Returns(Task.FromResult(true));
+        _compraRepositoryMock.Adicionar(Arg.Any<Compra>());
+        _compraRepositoryMock.UnitOfWork.Commit().Returns(Task.FromResult(true));
 
         // Act
-        var handler = new CompraCommandHandler(_vendaRepositoryMock);
+        var handler = new CompraCommandHandler(_compraRepositoryMock);
         var cltToken = new CancellationToken();
         await handler.Handle(fakeCriarCompra, cltToken);
 
         // Assert
-        _vendaRepositoryMock.Received().Adicionar(Arg.Any<Venda>());
-        await _vendaRepositoryMock.Received().UnitOfWork.Received().Commit(Arg.Any<CancellationToken>());
+        _compraRepositoryMock.Received().Adicionar(Arg.Any<Compra>());
+        await _compraRepositoryMock.Received().UnitOfWork.Received().Commit(Arg.Any<CancellationToken>());
     }
 
     [Fact(DisplayName = "Adicionar Item Command")]
@@ -50,23 +50,23 @@ public class CompraCommandHandlerTests
             new Faker().Random.Int(min: 1, max: 3),
             new Faker().Random.Decimal(min: 1, max: 5));
         
-        var fakeVenda = new Venda(Guid.NewGuid(),
+        var fakeCompra = new Compra(Guid.NewGuid(),
             new Faker().Random.Decimal(min: 1, max: 5),
-            new List<VendaItem>(),
+            new List<CompraItem>(),
             new Faker().Company.CompanyName());
 
-        _vendaRepositoryMock.ObterVendaPorId(Arg.Any<Guid>()).Returns(Task.FromResult(fakeVenda));
-        _vendaRepositoryMock.AdicionarItem(Arg.Any<VendaItem>());
-        _vendaRepositoryMock.UnitOfWork.Commit().Returns(Task.FromResult(true));
+        _compraRepositoryMock.ObterCompraPorId(Arg.Any<Guid>()).Returns(Task.FromResult(fakeCompra));
+        _compraRepositoryMock.AdicionarItem(Arg.Any<CompraItem>());
+        _compraRepositoryMock.UnitOfWork.Commit().Returns(Task.FromResult(true));
 
         // Act
-        var handler = new CompraCommandHandler(_vendaRepositoryMock);
+        var handler = new CompraCommandHandler(_compraRepositoryMock);
         var cltToken = new CancellationToken();
         await handler.Handle(fakeAdicionarItem, cltToken);
 
         // Assert
-        _vendaRepositoryMock.Received().AdicionarItem(Arg.Any<VendaItem>());
-        await _vendaRepositoryMock.Received().UnitOfWork.Received().Commit(Arg.Any<CancellationToken>());
+        _compraRepositoryMock.Received().AdicionarItem(Arg.Any<CompraItem>());
+        await _compraRepositoryMock.Received().UnitOfWork.Received().Commit(Arg.Any<CancellationToken>());
     }
 
     [Fact(DisplayName = "Remover Item Command")]
@@ -75,27 +75,27 @@ public class CompraCommandHandlerTests
     {
         // Assert
         var fakeRemoverItem = new RemoverItemCommand(Guid.NewGuid(), Guid.NewGuid());
-        var fakeVendaItem = new VendaItem(Guid.NewGuid(), new Faker().Commerce.Product(), 1, 5);
+        var fakeCompraItem = new CompraItem(Guid.NewGuid(), new Faker().Commerce.Product(), 1, 5);
 
-        var fakeVenda = new Venda(Guid.NewGuid(),
+        var fakeCompra = new Compra(Guid.NewGuid(),
             new Faker().Random.Decimal(min: 1, max: 5),
-            new List<VendaItem> { fakeVendaItem },
+            new List<CompraItem> { fakeCompraItem },
             new Faker().Company.CompanyName());
 
-        _vendaRepositoryMock.ObterVendaPorId(Arg.Any<Guid>()).Returns(Task.FromResult(fakeVenda));
-        _vendaRepositoryMock.ObterItemPorVenda(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(Task.FromResult(fakeVendaItem));
-        _vendaRepositoryMock.RemoverItem(Arg.Any<VendaItem>());
-        _vendaRepositoryMock.Atualizar(Arg.Any<Venda>());
-        _vendaRepositoryMock.UnitOfWork.Commit().Returns(Task.FromResult(true));
+        _compraRepositoryMock.ObterCompraPorId(Arg.Any<Guid>()).Returns(Task.FromResult(fakeCompra));
+        _compraRepositoryMock.ObterItemPorCompra(Arg.Any<Guid>(), Arg.Any<Guid>()).Returns(Task.FromResult(fakeCompraItem));
+        _compraRepositoryMock.RemoverItem(Arg.Any<CompraItem>());
+        _compraRepositoryMock.Atualizar(Arg.Any<Compra>());
+        _compraRepositoryMock.UnitOfWork.Commit().Returns(Task.FromResult(true));
 
         // Act
-        var handler = new CompraCommandHandler(_vendaRepositoryMock);
+        var handler = new CompraCommandHandler(_compraRepositoryMock);
         var cltToken = new CancellationToken();
         await handler.Handle(fakeRemoverItem, cltToken);
 
         // Assert
-        _vendaRepositoryMock.Received().RemoverItem(Arg.Any<VendaItem>());
-        await _vendaRepositoryMock.Received().UnitOfWork.Received().Commit(Arg.Any<CancellationToken>());
+        _compraRepositoryMock.Received().RemoverItem(Arg.Any<CompraItem>());
+        await _compraRepositoryMock.Received().UnitOfWork.Received().Commit(Arg.Any<CancellationToken>());
     }
 
     private CriarCompraCommand CriarCompraCommandMock(int quantidadeItens) 
@@ -106,14 +106,14 @@ public class CompraCommandHandlerTests
             ValorTotal = 10,
             Filial = new Faker().Company.CompanyName(),
             Desconto = decimal.Parse(new Faker().Commerce.Price(min: 1, max: 5)),
-            VendaItens = GerarItensVenda(quantidadeItens)
+            CompraItens = GerarItensCompra(quantidadeItens)
         };
     }
 
-    private List<VendaItemDTO> GerarItensVenda(int quantidade)
+    private List<CompraItemDTO> GerarItensCompra(int quantidade)
     {
-        var itens = new Faker<VendaItemDTO>()
-            .CustomInstantiator(item => new VendaItemDTO
+        var itens = new Faker<CompraItemDTO>()
+            .CustomInstantiator(item => new CompraItemDTO
             {
                 ProdutoId = Guid.NewGuid(),
                 Nome = item.Commerce.Product(),
