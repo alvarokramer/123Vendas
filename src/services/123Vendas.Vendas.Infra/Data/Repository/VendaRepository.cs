@@ -43,6 +43,16 @@ public class VendaRepository : IVendaRepository
         return await _context.VendaItens.FirstOrDefaultAsync(p => p.ProdutoId == produtoId && p.VendaId == vendaId);
     }
 
+    public void AdicionarItem(VendaItem vendaItem)
+    {
+        _context.VendaItens.Add(vendaItem);
+    }
+
+    public void AtualizarItem(VendaItem vendaItem)
+    {
+        _context.VendaItens.Update(vendaItem);
+    }
+
     public void RemoverItem(VendaItem vendaItem)
     {
         _context.VendaItens.Remove(vendaItem);
@@ -51,5 +61,5 @@ public class VendaRepository : IVendaRepository
     public void Dispose()
     {
         _context.Dispose();
-    }
+    }    
 }
